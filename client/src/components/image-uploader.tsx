@@ -43,12 +43,12 @@ export function ImageUploader({
       return false;
     }
 
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 100 * 1024 * 1024; // 100MB
     if (file.size > maxSize) {
       toast({
         variant: "destructive",
         title: "File too large",
-        description: "Please upload an image under 10MB"
+        description: "Please upload an image under 100MB"
       });
       return false;
     }
@@ -71,9 +71,9 @@ export function ImageUploader({
           { type: 'color' as const, name: 'Primary Blue', details: '#2563eb' },
           { type: 'shape' as const, name: 'Hero Image', details: 'PNG, 1200x800px' },
           { type: 'effect' as const, name: 'Shadow Effect', details: '0px 4px 6px rgba(0,0,0,0.1)' },
-          { 
-            type: 'palette' as const, 
-            name: 'Color Scheme', 
+          {
+            type: 'palette' as const,
+            name: 'Color Scheme',
             details: 'Brand Colors',
             value: JSON.stringify([
               { color: '#2563eb', name: 'Primary' },
@@ -131,14 +131,14 @@ export function ImageUploader({
           exit={{ opacity: 0, y: -20 }}
         >
           {!selectedImage ? (
-            <motion.div 
+            <motion.div
               className="text-center"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
               <motion.div
-                animate={{ 
+                animate={{
                   y: [0, -10, 0],
                   transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                 }}
@@ -146,8 +146,8 @@ export function ImageUploader({
                 <Upload className="mx-auto h-12 w-12 text-gray-400" />
               </motion.div>
               <div className="mt-4">
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   className="cursor-pointer hover:scale-105 transition-transform"
                 >
                   <label>
@@ -161,17 +161,17 @@ export function ImageUploader({
                   </label>
                 </Button>
               </div>
-              <motion.p 
+              <motion.p
                 className="mt-2 text-sm text-gray-500"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                Drop your image here or click to upload (PNG, JPG up to 10MB)
+                Drop your image here or click to upload (PNG, JPG up to 100MB)
               </motion.p>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               className="relative"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
