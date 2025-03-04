@@ -41,7 +41,7 @@ export function ImageUploader({
       });
       return false;
     }
-    
+
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
       toast({
@@ -51,21 +51,21 @@ export function ImageUploader({
       });
       return false;
     }
-    
+
     return true;
   };
 
-  const processImage = (file: File) => {
+  const processImage = async (file: File) => {
     if (!validateFile(file)) return;
 
     const reader = new FileReader();
     reader.onloadend = () => {
       setSelectedImage(reader.result as string);
       setIsProcessing(true);
-      
+
       // Simulate AI processing with mock data
       setTimeout(() => {
-        onElementsExtracted([
+        const mockElements = [
           { type: 'font', name: 'Primary Font', details: 'Helvetica Neue, 24px Bold' },
           { type: 'color', name: 'Primary Blue', details: '#2563eb' },
           { type: 'shape', name: 'Hero Image', details: 'PNG, 1200x800px' },
@@ -81,7 +81,15 @@ export function ImageUploader({
               { color: '#f8fafc', name: 'Background' }
             ])
           }
-        ]);
+        ];
+
+        onElementsExtracted(mockElements);
+        setIsProcessing(false);
+
+        toast({
+          title: "Image analyzed successfully",
+          description: "Design elements have been extracted"
+        });
       }, 2000);
     };
     reader.readAsDataURL(file);
@@ -91,7 +99,7 @@ export function ImageUploader({
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       processImage(e.dataTransfer.files[0]);
     }
@@ -121,8 +129,8 @@ export function ImageUploader({
           <div className="text-center">
             <Upload className="mx-auto h-12 w-12 text-gray-400" />
             <div className="mt-4">
-              <label className="cursor-pointer">
-                <Button>
+              <Button asChild className="cursor-pointer">
+                <label>
                   Choose Image
                   <input
                     type="file"
@@ -130,8 +138,8 @@ export function ImageUploader({
                     accept="image/png,image/jpeg"
                     onChange={handleChange}
                   />
-                </Button>
-              </label>
+                </label>
+              </Button>
             </div>
             <p className="mt-2 text-sm text-gray-500">
               Drop your image here or click to upload (PNG, JPG up to 10MB)
